@@ -1,0 +1,59 @@
+.main {
+  position: relative;
+
+  margin-top: -38px;
+
+  background-image:
+    url("../../img/guitar-top.png"),
+    linear-gradient(to right, #3F3F3F, #3F3F3F),
+    linear-gradient(to right, #3F3F3F, #3F3F3F),
+    linear-gradient(to right, #3F3F3F, #3F3F3F),
+    linear-gradient(to right, #3F3F3F, #3F3F3F),
+    linear-gradient(to right, #3F3F3F, #3F3F3F),
+    linear-gradient(to right, #3F3F3F, #3F3F3F),
+    linear-gradient(to right, #3F3F3F, #3F3F3F);
+  background-position:
+    top right,
+    top 132px left,
+    top 118px left,
+    top 104px left,
+    top 90px left,
+    top 76px left,
+    top 62px left,
+    bottom 10px left;
+  background-size:
+    auto auto,
+    100% 4px,
+    100% 4px,
+    100% 4px,
+    100% 4px,
+    100% 4px,
+    100% 4px,
+    100% 6px;
+  background-repeat:
+    no-repeat,
+    no-repeat,
+    no-repeat,
+    no-repeat,
+    no-repeat,
+    no-repeat,
+    no-repeat,
+    no-repeat;
+
+    &::before {
+      position: absolute;
+      z-index: -1;
+
+      content: "";
+      width: 868px;
+      height: 300px;
+      bottom: -208px;
+      left: -48px;
+      -webkit-transform: rotate(180deg);
+      -moz-transform: rotate(180deg);
+      transform: rotate(180deg);
+
+      background-image: url("../../img/guitar-top.png");
+      background-repeat: no-repeat;
+    }
+}
