@@ -2,6 +2,7 @@
   position: relative;
 
   margin-top: -38px;
+  padding-top: 237px;
 
   background-image:
     url("../../img/guitar-top.png"),
@@ -56,4 +57,41 @@
       background-image: url("../../img/guitar-top.png");
       background-repeat: no-repeat;
     }
+}
+
+.main__header {
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 26px;
+  letter-spacing: 0.7px;
+}
+
+.main__breadcrumbs {
+  display: flex;
+  margin-top: 19px;
+}
+
+.main__breadcrumb {
+  position: relative;
+
+  margin-right: 35px;
+
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: 0.75px;
+
+  color: #474747;
+
+  &::before {
+    position: absolute;
+    content: "";
+
+    top: 3px;
+    left: -26px;
+    width: 16px;
+    height: 16px;
+    background-image: url("../../img/arrow-right.svg");
+    background-repeat: no-repeat;
+  }
+
 }
