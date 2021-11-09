@@ -1,0 +1,93 @@
+.footer {
+  min-height: 273px;
+  background-color: #3F3F3F;
+}
+
+.footer__wrapper {
+  display: flex;
+}
+
+.footer__logo-wrapper {
+  padding-top: 61px;
+  padding-left: 1px;
+}
+
+.footer__social {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  margin-top: 50px;
+  width: 118px;
+}
+
+.footer__list {
+  display: flex;
+}
+
+.footer__item {
+  min-width: 140px;
+  padding-top: 53px;
+
+  &--about-us {
+    width: 142px;
+    margin-left: 122px;
+  }
+
+  &--catalog {
+    width: 150px;
+    margin-left: 18px;
+  }
+
+  &--info {
+    margin-left: 12px;
+  }
+
+  &--contacts {
+    margin-left: 97px;
+  }
+}
+
+.footer__item-header {
+  margin-bottom: 2px;
+
+  font-size: 14px;
+  line-height: 44px;
+  letter-spacing: 2px;
+
+  color: #FFFFFF;
+
+  opacity: 0.7;
+}
+
+.footer__item-text {
+  margin-top: 0;
+  margin-bottom: 12px;
+
+  font-size: 10px;
+  line-height: 12px;
+  letter-spacing: 0.2px;
+
+  color: #FFFFFF;
+
+  &--contacts {
+    margin-top: -4px;
+    width: 126px;
+
+    line-height: 13px;
+    letter-spacing: 1.25px;
+  }
+}
+
+.footer__item-list {
+  margin-top: -4px;
+
+  font-size: 10px;
+  line-height: 20px;
+
+  letter-spacing: 1.25px;
+}
+
+.footer__item-link {
+  color: #FFFFFF;
+}
