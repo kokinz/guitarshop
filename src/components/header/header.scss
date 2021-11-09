@@ -1,0 +1,48 @@
+.header {
+  min-height: 110px;
+  background-color: rgba(30, 9, 6, 0.15);
+}
+
+.header__wrapper {
+  display: flex;
+}
+
+.header__logo {
+  margin-top: 20px;
+}
+
+.header__nav {
+  display: flex;
+}
+
+.header__site-list {
+  display: flex;
+  flex-wrap: wrap;
+
+  margin-left: 95px;
+  padding-top: 45px;
+}
+
+.header__item {
+  margin: 0 20px;
+  margin-bottom: 20px;
+
+  letter-spacing: 1.08px;
+}
+
+.header__user-list {
+  display: flex;
+  margin-left: 124px;
+  padding-top: 35px;
+}
+
+.header__user-link {
+  margin-right: 10px;
+
+  font-size: 0;
+}
+
+.header__basket-image {
+  margin-left: 10px;
+  margin-top: 10px;
+}

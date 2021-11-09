@@ -1,0 +1,15 @@
+@font-face {
+  font-family: "Droid Sans";
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: local("Droid Sans"), local("Droid-Sans"), url("../fonts/droid-sans.woff2") format("woff2"), url("../fonts/droid-sans.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Droid Sans";
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: local("Droid Sans Bold"), local("Droid-Sans-Bold"), url("../fonts/droid-sans-bold.woff2") format("woff2"), url("../fonts/droid-sans-bold.woff") format("woff");
+}

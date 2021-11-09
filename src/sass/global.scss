@@ -20,7 +20,7 @@
   margin: 0;
   height: 100%;
 
-  font-family: 'Roboto', 'Tahoma', sans-serif;
+  font-family: 'Droid Sans', 'Tahoma', sans-serif;
 }
 
 .root {
@@ -32,12 +32,16 @@
 .container {
   box-sizing: border-box;
   margin: 0 auto;
-  padding: 0 98px;
-  width: 100%;
+  padding: 0 40px;
+  min-width: 1020px;
+  width: 1020px;
+
+  font-size: 14px;
+  line-height: 20px;
 }
 
 .link {
-  font-family: 'Roboto', 'Tahoma', sans-serif;
+  font-family: 'Droid Sans', 'Tahoma', sans-serif;
   color: #000000;
   text-decoration: none;
   cursor: pointer;
@@ -71,7 +75,7 @@
   align-items: center;
 
   vertical-align: middle;
-  font-family: 'Roboto', 'Tahoma', sans-serif;
+  font-family: 'Droid Sans', 'Tahoma', sans-serif;
   font-weight: 500;
   font-size: 18px;
   line-height: 21px;
