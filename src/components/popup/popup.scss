@@ -149,6 +149,38 @@
   background-color: transparent;
   border-radius: 2px;
   border: 1px solid #585757;
+
+  &--cart {
+    position: absolute;
+
+    top: 146px;
+    right: 50px;
+    margin-top: 0;
+    margin-left: 0;
+  }
+ }
+
+ .popup__delete-button {
+  position: absolute;
+
+  min-width: 220px;
+  min-height: 46px;
+  width: 220px;
+  height: 46px;
+  top: 84px;
+  right: 50px;
+  padding-bottom: 6px;
+
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 15px;
+
+  letter-spacing: 1.3px;
+
+  color: #FFFFFF;
+
+  background-color: #E27F00;
+  border-radius: 2px;
  }
 
  .popup__close-button {
