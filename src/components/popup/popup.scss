@@ -18,6 +18,10 @@
   box-shadow: 0px 5px 6px rgba(63, 63, 63, 0.2);
   border-radius: 4px;
   box-sizing: border-box;
+
+  &--added {
+    height: 185px;
+  }
 }
 
 .popup__header
@@ -102,6 +106,49 @@
 
   background-color: #E27F00;
   border-radius: 2px;
+ }
+
+ .popup__cart-button {
+  min-width: 220px;
+  min-height: 46px;
+  width: 220px;
+  height: 46px;
+  margin-top: -14px;
+  margin-left: 82px;
+  padding-bottom: 6px;
+
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 15px;
+
+  letter-spacing: 1.3px;
+
+  color: #FFFFFF;
+
+  background-color: #E27F00;
+  border-radius: 2px;
+ }
+
+ .popup__buy-button {
+  min-width: 220px;
+  min-height: 46px;
+  width: 220px;
+  height: 46px;
+  margin-top: -14px;
+  margin-left: 37px;
+  padding-bottom: 2px;
+
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 15px;
+
+  letter-spacing: 1.3px;
+
+  color: #585757;
+
+  background-color: transparent;
+  border-radius: 2px;
+  border: 1px solid #585757;
  }
 
  .popup__close-button {
