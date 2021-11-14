@@ -1,19 +1,24 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {guitarPropType} from '../../store/data.js';
 import {getGuitars} from '../../store/guitars-data/selectors.js';
 
-import {AppRoute} from '../../const';
+import {AppRoute, GuitarType, StringsCount} from '../../const';
 import Footer from "../footer/footer";
 import Header from "../header/header";
+import { getNumberFromString, getNumberWithSpaces } from "../../utils.js";
 // import PopupDelete from "../popup/popup-delete/popup-delete";
 // import PopupAdded from "../popup/popup-added/popup-added";
 // import PopupAdd from "../popup/popup-add/popup-add";
 
 function CatalogPage({guitars}) {
   // const SHOWN_COUNT = 9;
+  const Price = {
+    MAX: 35000,
+    MIN: 1700,
+  };
 
   const SortType = {
     PRICE: 'byPrice',
@@ -27,57 +32,276 @@ function CatalogPage({guitars}) {
 
   const [sort, setSort] = useState(null);
   const [sortDirection, setSortDirection] = useState(null);
-  // const [activePage, setActivePage] = useState(1);
   const [currentGuitars, setCurrentGuitars] = useState(guitars);
 
+  const [priceRange, setPriceRange] = useState({
+    max: Price.MAX,
+    min: Price.MIN
+  });
 
-  const handleSortPriceClick = () => {
+  const [guitarType, setGuitarType] = useState({
+    electro: true,
+    ukulele: true,
+    acoustic: true,
+  });
+
+  const [stringsType, setStringsType] = useState({
+    four: false,
+    six: false,
+    seven: false,
+    twelve: false,
+  });
+
+  const [stringsCount, setStringsCount] = useState({
+    four: true,
+    six: true,
+    seven: true,
+    twelve: true,
+  });
+
+  useEffect(() => {
+    const array = guitars.filter((guitar) => {
+      let result = false;
+
+      if (guitarType.electro && !result) {
+        result = guitar.type === GuitarType.ELECTRO;
+      }
+
+      if (guitarType.ukulele && !result) {
+        result = guitar.type === GuitarType.UKULELE;
+      }
+
+      if (guitarType.acoustic && !result) {
+        result = guitar.type === GuitarType.ACOUSTIC;
+      }
+
+      if (result) {
+        result = (guitar.price >= priceRange.min && guitar.price <= priceRange.max);
+      }
+
+      if (result) {
+        result = false;
+
+        if (!stringsType.four && stringsCount.four && !result) {
+          result = guitar.stringsCount === StringsCount.FOUR;
+        }
+
+        if (!stringsType.six && stringsCount.six && !result) {
+          result = guitar.stringsCount === StringsCount.SIX;
+        }
+
+        if (!stringsType.seven && stringsCount.seven && !result) {
+          result = guitar.stringsCount === StringsCount.SEVEN;
+        }
+
+        if (!stringsType.twelve && stringsCount.twelve && !result) {
+          result = guitar.stringsCount === StringsCount.TWELVE;
+        }
+      }
+
+      return result;
+    });
+
+    if (sort === SortType.PRICE) {
+      if (sortDirection === null || sortDirection === SortDirection.UP) {
+        setCurrentGuitars(array.sort((a, b) => a.price - b.price));
+        setSortDirection(SortDirection.UP);
+      }
+
+      if (sortDirection === SortDirection.DOWN) {
+        setCurrentGuitars(array.sort((a, b) => b.price - a.price));
+      }
+    }
+
+    if (sort === SortType.POPULAR) {
+      if (sortDirection === null || sortDirection === SortDirection.UP) {
+        setCurrentGuitars(array.sort((a, b) => a.reviewsCount - b.reviewsCount));
+        setSortDirection(SortDirection.UP);
+      }
+
+      if (sortDirection === SortDirection.DOWN) {
+        setCurrentGuitars(array.sort((a, b) => b.reviewsCount - a.reviewsCount));
+      }
+    }
+
+    if (guitarType.ukulele && !guitarType.electro && !guitarType.acoustic) {
+      setStringsType({
+        four: false,
+        six: true,
+        seven: true,
+        twelve: true,
+      });
+    }
+
+    if (guitarType.acoustic && !guitarType.electro && !guitarType.ukulele) {
+      setStringsType({
+        four: true,
+        six: false,
+        seven: false,
+        twelve: false,
+      });
+    }
+
+    if (guitarType.electro && !guitarType.acoustic) {
+      setStringsType({
+        four: false,
+        six: false,
+        seven: false,
+        twelve: true,
+      });
+    }
+
+    if ((guitarType.electro && guitarType.acoustic) || (guitarType.acoustic && guitarType.ukulele)) {
+      setStringsType({
+        four: false,
+        six: false,
+        seven: false,
+        twelve: false,
+      });
+    }
+
+    if (!guitarType.electro && !guitarType.acoustic && !guitarType.ukulele) {
+      setStringsType({
+        four: true,
+        six: true,
+        seven: true,
+        twelve: true,
+      });
+    }
+
+    setCurrentGuitars(array);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [guitarType,
+      sort,
+      sortDirection,
+      priceRange,
+      stringsCount,
+  ]);
+
+  const handleSortPriceClick = (evt) => {
+    evt.preventDefault();
+
     setSort(SortType.PRICE);
-
-    if (sortDirection === null || sortDirection === SortDirection.UP) {
-      setCurrentGuitars(currentGuitars.sort((a, b) => a.price - b.price));
-
-      setSortDirection(SortDirection.UP);
-      return;
-    }
-
-    if (sortDirection === SortDirection.DOWN) {
-      setCurrentGuitars(currentGuitars.sort((a, b) => b.price - a.price));
-    }
-
   };
 
-  const handleSortPopularClick = () => {
+  const handleSortPopularClick = (evt) => {
+    evt.preventDefault();
+
     setSort(SortType.POPULAR);
-
-    if (sortDirection === null || sortDirection === SortDirection.UP) {
-      setCurrentGuitars(currentGuitars.sort((a, b) => a.reviewsCount - b.reviewsCount));
-
-      setSortDirection(SortDirection.UP);
-      return;
-    }
-
-    if (sortDirection === SortDirection.DOWN) {
-      setCurrentGuitars(currentGuitars.sort((a, b) => b.reviewsCount - a.reviewsCount));
-    }
   };
 
-  const handleSortAscendingClick = () => {
+  const handleSortAscendingClick = (evt) => {
+    evt.preventDefault();
+
     if (sortDirection === SortDirection.UP) {
       return;
+    }
+
+    if (sort === null) {
+      setSort(SortType.PRICE);
     }
 
     setSortDirection(SortDirection.UP);
     setCurrentGuitars(currentGuitars.reverse());
   };
 
-  const handleSortDescendingClick = () => {
+  const handleSortDescendingClick = (evt) => {
+    evt.preventDefault();
+
     if (sortDirection === SortDirection.DOWN) {
       return;
     }
 
+    if (sort === null) {
+      setSort(SortType.PRICE);
+    }
+
     setSortDirection(SortDirection.DOWN);
     setCurrentGuitars(currentGuitars.reverse());
+  };
+
+  const handleMinPriceType = (evt) => {
+    const number = getNumberFromString(evt.target.value);
+
+    if (number < Price.MIN || number > priceRange.max) {
+      return;
+    }
+
+    setPriceRange({
+      ...priceRange,
+      min: number,
+    });
+  };
+
+  const handleMaxPriceType = (evt) => {
+    const number = getNumberFromString(evt.target.value);
+
+    if (number < priceRange.min || number > Price.MAX) {
+      return;
+    }
+
+    setPriceRange({
+      ...priceRange,
+      max: getNumberFromString(evt.target.value),
+    });
+  };
+
+  const handleGuitarTypeChange = (evt) => {
+    switch(evt.target.value) {
+      case GuitarType.ELECTRO: {
+        return setGuitarType({
+          ...guitarType,
+          electro: evt.target.checked,
+        });
+      }
+      case GuitarType.ACOUSTIC: {
+        return setGuitarType({
+          ...guitarType,
+          acoustic: evt.target.checked,
+        });
+      }
+      case GuitarType.UKULELE: {
+        return setGuitarType({
+          ...guitarType,
+          ukulele: evt.target.checked,
+        });
+      }
+      default: {
+        return;
+      }
+    }
+  };
+
+  const handleStringsCountClick = (evt) => {
+    switch(parseInt(evt.target.value, 10)) {
+      case StringsCount.FOUR: {
+        return setStringsCount({
+          ...stringsCount,
+          four: evt.target.checked,
+        });
+      }
+      case StringsCount.SIX: {
+        return setStringsCount({
+          ...stringsCount,
+          six: evt.target.checked,
+        });
+      }
+      case StringsCount.SEVEN: {
+        return setStringsCount({
+          ...stringsCount,
+          seven: evt.target.checked,
+        });
+      }
+      case StringsCount.TWELVE: {
+        return setStringsCount({
+          ...stringsCount,
+          twelve: evt.target.checked,
+        });
+      }
+      default: {
+        return;
+      }
+    }
   };
 
   return (
@@ -111,25 +335,25 @@ function CatalogPage({guitars}) {
                 <fieldset className="filter__fieldset filter__fieldset--price">
                   <h3 className="filter__fieldset-title">Цена, ₽</h3>
 
-                  <input type="text" className="filter__input" defaultValue="1 000" />
+                  <input type="text" className="filter__input" onChange={handleMinPriceType} value={getNumberWithSpaces(priceRange.min)} />
 
-                  <input type="text" className="filter__input" defaultValue="30 000" />
+                  <input type="text" className="filter__input" onChange={handleMaxPriceType} value={getNumberWithSpaces(priceRange.max)} />
                 </fieldset>
 
                 <fieldset className="filter__fieldset filter__fieldset--type">
                   <h3 className="filter__fieldset-title filter__fieldset-title--type">Тип гитар</h3>
 
-                  <input className="filter__checkbox visually-hidden" type="checkbox" name="Акустические гитары" id="acoustic-guitars" value="acoustic-guitars" tabIndex="-1" />
+                  <input className="filter__checkbox visually-hidden" type="checkbox" name="Акустические гитары" id="acoustic-guitars" value={GuitarType.ACOUSTIC} tabIndex="-1" defaultChecked={guitarType.acoustic} onChange={handleGuitarTypeChange} />
                   <label className="filter__label" htmlFor="acoustic-guitars" tabIndex="0">
                     Акустические гитары
                   </label>
 
-                  <input className="filter__checkbox visually-hidden" type="checkbox" name="Электрогитары" id="electric-guitars" value="electric-guitars" tabIndex="-1" defaultChecked />
+                  <input className="filter__checkbox visually-hidden" type="checkbox" name="Электрогитары" id="electric-guitars" value={GuitarType.ELECTRO} tabIndex="-1" defaultChecked={guitarType.electro} onChange={handleGuitarTypeChange} />
                   <label className="filter__label" htmlFor="electric-guitars" tabIndex="0">
                     Электрогитары
                   </label>
 
-                  <input className="filter__checkbox visually-hidden" type="checkbox" name="Укулеле" id="ukulele" value="ukulele" tabIndex="-1" defaultChecked />
+                  <input className="filter__checkbox visually-hidden" type="checkbox" name="Укулеле" id="ukulele" value={GuitarType.UKULELE} tabIndex="-1" defaultChecked={guitarType.ukulele} onChange={handleGuitarTypeChange} />
                   <label className="filter__label" htmlFor="ukulele" tabIndex="0">
                     Укулеле
                   </label>
@@ -138,30 +362,26 @@ function CatalogPage({guitars}) {
                 <fieldset className="filter__fieldset filter__fieldset--strings">
                   <h3 className="filter__fieldset-title filter__fieldset-title--strings">Количество струн</h3>
 
-                  <input className="filter__checkbox visually-hidden" type="checkbox" name="four-strings" id="four-strings" value="four-strings" tabIndex="-1" defaultChecked />
+                  <input className="filter__checkbox visually-hidden" type="checkbox" name="four-strings" id="four-strings" value={StringsCount.FOUR} tabIndex="-1" disabled={stringsType.four} checked={stringsCount.four} onChange={handleStringsCountClick} />
                   <label className="filter__label" htmlFor="four-strings" tabIndex="0">
                     4
                   </label>
 
-                  <input className="filter__checkbox visually-hidden" type="checkbox" name="six-strings" id="six-strings" value="six-strings" tabIndex="-1" defaultChecked />
+                  <input className="filter__checkbox visually-hidden" type="checkbox" name="six-strings" id="six-strings" value={StringsCount.SIX} tabIndex="-1" disabled={stringsType.six} checked={stringsCount.six} onChange={handleStringsCountClick} />
                   <label className="filter__label" htmlFor="six-strings" tabIndex="0">
                     6
                   </label>
 
-                  <input className="filter__checkbox visually-hidden" type="checkbox" name="seven-strings" id="seven-strings" value="seven-strings" tabIndex="-1" />
+                  <input className="filter__checkbox visually-hidden" type="checkbox" name="seven-strings" id="seven-strings" value={StringsCount.SEVEN} tabIndex="-1" disabled={stringsType.seven} checked={stringsCount.seven} onChange={handleStringsCountClick} />
                   <label className="filter__label" htmlFor="seven-strings" tabIndex="0">
                     7
                   </label>
 
-                  <input className="filter__checkbox visually-hidden" type="checkbox" name="twelve-strings" id="twelve-strings" value="twelve-strings" tabIndex="-1" disabled />
+                  <input className="filter__checkbox visually-hidden" type="checkbox" name="twelve-strings" id="twelve-strings" value={StringsCount.TWELVE} tabIndex="-1" disabled={stringsType.twelve} checked={stringsCount.twelve} onChange={handleStringsCountClick} />
                   <label className="filter__label" htmlFor="twelve-strings" tabIndex="0">
                     12
                   </label>
                 </fieldset>
-
-                <button className="filter__submit button" type="submit">
-                  Показать
-                </button>
               </form>
             </section>
 
@@ -189,7 +409,7 @@ function CatalogPage({guitars}) {
             </section>
 
             <section className="catalog__list">
-              <ul className="catalog__cards-list list">
+              {currentGuitars.length ? <ul className="catalog__cards-list list">
                 {currentGuitars.map((guitar) => (
                   <li className="catalog__item" key={guitar.reference}>
                     <article>
@@ -228,8 +448,9 @@ function CatalogPage({guitars}) {
                     </article>
                   </li>
                 ))}
-              </ul>
+              </ul> : <h2 >Результатов не найдено</h2>}
 
+              {currentGuitars.length ?
               <ul className="catalog__pagination-list list">
                 <li className="catalog__pagination-item">
                   <a href="/#" className="catalog__pagination-button catalog__pagination-button--active link">
@@ -256,7 +477,8 @@ function CatalogPage({guitars}) {
                     Далее
                   </a>
                 </li>
-              </ul>
+              </ul> : ''}
+
             </section>
 
             {/* <PopupDelete /> */}
