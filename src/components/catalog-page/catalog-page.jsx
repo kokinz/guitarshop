@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
@@ -13,6 +13,73 @@ import Header from "../header/header";
 // import PopupAdd from "../popup/popup-add/popup-add";
 
 function CatalogPage({guitars}) {
+  // const SHOWN_COUNT = 9;
+
+  const SortType = {
+    PRICE: 'byPrice',
+    POPULAR: 'byPopular',
+  };
+
+  const SortDirection= {
+    UP: 'up',
+    DOWN: 'down',
+  };
+
+  const [sort, setSort] = useState(null);
+  const [sortDirection, setSortDirection] = useState(null);
+  // const [activePage, setActivePage] = useState(1);
+  const [currentGuitars, setCurrentGuitars] = useState(guitars);
+
+
+  const handleSortPriceClick = () => {
+    setSort(SortType.PRICE);
+
+    if (sortDirection === null || sortDirection === SortDirection.UP) {
+      setCurrentGuitars(currentGuitars.sort((a, b) => a.price - b.price));
+
+      setSortDirection(SortDirection.UP);
+      return;
+    }
+
+    if (sortDirection === SortDirection.DOWN) {
+      setCurrentGuitars(currentGuitars.sort((a, b) => b.price - a.price));
+    }
+
+  };
+
+  const handleSortPopularClick = () => {
+    setSort(SortType.POPULAR);
+
+    if (sortDirection === null || sortDirection === SortDirection.UP) {
+      setCurrentGuitars(currentGuitars.sort((a, b) => a.reviewsCount - b.reviewsCount));
+
+      setSortDirection(SortDirection.UP);
+      return;
+    }
+
+    if (sortDirection === SortDirection.DOWN) {
+      setCurrentGuitars(currentGuitars.sort((a, b) => b.reviewsCount - a.reviewsCount));
+    }
+  };
+
+  const handleSortAscendingClick = () => {
+    if (sortDirection === SortDirection.UP) {
+      return;
+    }
+
+    setSortDirection(SortDirection.UP);
+    setCurrentGuitars(currentGuitars.reverse());
+  };
+
+  const handleSortDescendingClick = () => {
+    if (sortDirection === SortDirection.DOWN) {
+      return;
+    }
+
+    setSortDirection(SortDirection.DOWN);
+    setCurrentGuitars(currentGuitars.reverse());
+  };
+
   return (
     <>
       <Header />
@@ -103,27 +170,27 @@ function CatalogPage({guitars}) {
 
               <ul className="sort__list list">
                 <li>
-                  <a href="/#" className="sort__item sort__item--correct link">По цене</a>
+                  <a href="/#" className={`sort__item link ${sort === SortType.PRICE ? 'sort__item--active' : ''}`} onClick={handleSortPriceClick}>По цене</a>
                 </li>
 
                 <li>
-                  <a href="/#" className="sort__item link">По популярности</a>
+                  <a href="/#" className={`sort__item link ${sort === SortType.POPULAR ? 'sort__item--active' : ''}`} onClick={handleSortPopularClick}>По популярности</a>
                 </li>
               </ul>
 
               <ul className="sort__list-direction list">
                 <li>
-                  <a className="sort__item-direction-ascending link" href="/#" aria-label="По возрастанию">По возрастанию</a>
+                  <a className={`sort__item-direction-ascending link ${sortDirection === SortDirection.UP ? 'sort__item-direction-ascending--correct' : ''}`} href="/#" aria-label="По возрастанию" onClick={handleSortAscendingClick}>По возрастанию</a>
                 </li>
                 <li>
-                  <a className="sort__item-direction-descending sort__item-direction--correct link" href="/#" aria-label="По убыванию">По убыванию</a>
+                  <a className={`sort__item-direction-descending link ${sortDirection === SortDirection.DOWN ? 'sort__item-direction-descending--correct' : ''}`} href="/#" aria-label="По убыванию" onClick={handleSortDescendingClick}>По убыванию</a>
                 </li>
               </ul>
             </section>
 
             <section className="catalog__list">
               <ul className="catalog__cards-list list">
-                {guitars.map((guitar) => (
+                {currentGuitars.map((guitar) => (
                   <li className="catalog__item" key={guitar.reference}>
                     <article>
                       <h3 className="visually-hidden">{guitar.name}</h3>

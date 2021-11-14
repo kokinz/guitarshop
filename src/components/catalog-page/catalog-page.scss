@@ -211,6 +211,7 @@
 }
 
 .sort__title {
+  font-weight: 400;
   font-size: 16px;
   line-height: 20px;
 
@@ -232,6 +233,14 @@
   text-transform: lowercase;
 }
 
+.sort__item {
+  color: #585757;
+
+  &--active {
+    color: #000000;
+  }
+}
+
 .sort__list-direction {
   display: flex;
   justify-content: space-between;
@@ -251,6 +260,11 @@
 
   background-image: url("../../img/icon-arrow.svg");
   background-repeat: no-repeat;
+  opacity: 0.6;
+
+  &--correct {
+    opacity: 1;
+  }
 }
 
 .sort__item-direction-descending  {
@@ -263,10 +277,11 @@
   background-image: url("../../img/icon-arrow.svg");
   background-repeat: no-repeat;
   transform: rotate(180deg);
-}
-
-.sort__item-direction--correct {
   opacity: 0.6;
+
+  &--correct {
+    opacity: 1;
+  }
 }
 
 .catalog__list {
