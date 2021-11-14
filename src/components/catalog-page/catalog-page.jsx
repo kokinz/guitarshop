@@ -124,12 +124,29 @@ function CatalogPage({guitars}) {
       }
     }
 
+    setCurrentGuitars(array);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [guitarType,
+      sort,
+      sortDirection,
+      priceRange,
+      stringsCount,
+  ]);
+
+  useEffect(() => {
     if (guitarType.ukulele && !guitarType.electro && !guitarType.acoustic) {
       setStringsType({
         four: false,
         six: true,
         seven: true,
         twelve: true,
+      });
+
+      setStringsCount({
+        four: true,
+        six: false,
+        seven: false,
+        twelve: false,
       });
     }
 
@@ -140,6 +157,13 @@ function CatalogPage({guitars}) {
         seven: false,
         twelve: false,
       });
+
+      setStringsCount({
+        four: false,
+        six: true,
+        seven: true,
+        twelve: true,
+      });
     }
 
     if (guitarType.electro && !guitarType.acoustic) {
@@ -148,6 +172,13 @@ function CatalogPage({guitars}) {
         six: false,
         seven: false,
         twelve: true,
+      });
+
+      setStringsCount({
+        four: true,
+        six: true,
+        seven: true,
+        twelve: false,
       });
     }
 
@@ -158,6 +189,13 @@ function CatalogPage({guitars}) {
         seven: false,
         twelve: false,
       });
+
+      setStringsCount({
+        four: true,
+        six: true,
+        seven: true,
+        twelve: true,
+      });
     }
 
     if (!guitarType.electro && !guitarType.acoustic && !guitarType.ukulele) {
@@ -167,16 +205,15 @@ function CatalogPage({guitars}) {
         seven: true,
         twelve: true,
       });
-    }
 
-    setCurrentGuitars(array);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [guitarType,
-      sort,
-      sortDirection,
-      priceRange,
-      stringsCount,
-  ]);
+      setStringsCount({
+        four: false,
+        six: false,
+        seven: false,
+        twelve: false,
+      });
+    }
+  }, [guitarType]);
 
   const handleSortPriceClick = (evt) => {
     evt.preventDefault();
