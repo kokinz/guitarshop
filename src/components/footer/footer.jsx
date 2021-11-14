@@ -1,4 +1,6 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
+import {AppRoute} from '../../const';
 
 function Footer() {
 
@@ -6,11 +8,11 @@ function Footer() {
     <footer className="footer">
       <div className="footer__wrapper container">
         <div className="footer__logo-wrapper">
-          <a className="footer__logo" href="/" aria-label="Guitar Shop">
+          <Link className="footer__logo" to={AppRoute.MAIN} aria-label="Guitar Shop">
             <svg className="footer__logo-image" width="67" height="70" viewBox="0 0 67 70">
               <use xlinkHref="#logo-white" />
             </svg>
-          </a>
+          </Link>
 
           <ul className="footer__social list">
             <li>

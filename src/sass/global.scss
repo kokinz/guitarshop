@@ -109,5 +109,105 @@
   overflow: hidden;
   box-sizing: border-box;
   background-color: rgba(88, 87, 87, 0.6);
+}
 
+.main {
+  position: relative;
+
+  margin-top: -38px;
+  padding-top: 237px;
+
+  background-image:
+    url("../img/guitar-top.png"),
+    linear-gradient(to right, #3F3F3F, #3F3F3F),
+    linear-gradient(to right, #3F3F3F, #3F3F3F),
+    linear-gradient(to right, #3F3F3F, #3F3F3F),
+    linear-gradient(to right, #3F3F3F, #3F3F3F),
+    linear-gradient(to right, #3F3F3F, #3F3F3F),
+    linear-gradient(to right, #3F3F3F, #3F3F3F),
+    linear-gradient(to right, #3F3F3F, #3F3F3F);
+  background-position:
+    top right,
+    top 132px left,
+    top 118px left,
+    top 104px left,
+    top 90px left,
+    top 76px left,
+    top 62px left,
+    bottom 10px left;
+  background-size:
+    auto auto,
+    100% 4px,
+    100% 4px,
+    100% 4px,
+    100% 4px,
+    100% 4px,
+    100% 4px,
+    100% 6px;
+  background-repeat:
+    no-repeat,
+    no-repeat,
+    no-repeat,
+    no-repeat,
+    no-repeat,
+    no-repeat,
+    no-repeat,
+    no-repeat;
+
+    &::before {
+      position: absolute;
+      z-index: -1;
+
+      content: "";
+      width: 868px;
+      height: 300px;
+      bottom: -208px;
+      left: -48px;
+      -webkit-transform: rotate(180deg);
+      -moz-transform: rotate(180deg);
+      transform: rotate(180deg);
+
+      background-image: url("../img/guitar-top.png");
+      background-repeat: no-repeat;
+    }
+}
+
+.main__header {
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 26px;
+  letter-spacing: 0.7px;
+
+  &--cart {
+    margin-top: 39px;
+  }
+}
+
+.main__breadcrumbs {
+  display: flex;
+  margin-top: 19px;
+}
+
+.main__breadcrumb {
+  position: relative;
+
+  margin-right: 35px;
+
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: 0.75px;
+
+  color: #474747;
+
+  &:not(:first-child)::before {
+    position: absolute;
+    content: "";
+
+    top: 3px;
+    left: -26px;
+    width: 16px;
+    height: 16px;
+    background-image: url("../img/arrow-right.svg");
+    background-repeat: no-repeat;
+  }
 }

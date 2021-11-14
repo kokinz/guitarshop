@@ -1,5 +1,5 @@
 import React from "react";
-import PopupDelete from "../popup/popup-delete/popup-delete";
+// import PopupDelete from "../popup/popup-delete/popup-delete";
 // import PopupAdded from "../popup/popup-added/popup-added";
 // import PopupAdd from "../popup/popup-add/popup-add";
 
@@ -455,7 +455,7 @@ function Catalog() {
         </ul>
       </section>
 
-      <PopupDelete />
+      {/* <PopupDelete /> */}
       {/* <PopupAdd /> */}
       {/* <PopupAdded /> */}
     </section>

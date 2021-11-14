@@ -37,6 +37,8 @@
 }
 
 .header__user-link {
+  position: relative;
+
   margin-right: 10px;
 
   font-size: 0;
@@ -45,4 +47,17 @@
 .header__basket-image {
   margin-left: 10px;
   margin-top: 10px;
+}
+
+.header__count-cart {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  bottom: 8px;
+  right: -12px;
+
+  font-size: 10px;
+  line-height: 12px;
+
+  color: #F20505;
 }

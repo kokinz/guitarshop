@@ -1,19 +1,23 @@
 import React from 'react';
-import Header from '../header/header';
-import Main from '../main/main';
-import Footer from '../footer/footer';
+import CatalogPage from '../catalog-page/catalog-page';
+import CartPage from '../cart-page/cart-page'
+
 import './app.scss';
+import {Switch, Route} from 'react-router';
+import {AppRoute} from '../../const';
 
 function App() {
 
   return (
-    <>
-      <Header />
+    <Switch>
+      <Route exact path={AppRoute.MAIN}>
+        <CatalogPage />
+      </Route>
 
-      <Main />
-
-      <Footer />
-    </>
+      <Route exact path={AppRoute.CART}>
+        <CartPage />
+      </Route>
+    </Switch>
   );
 }
 
