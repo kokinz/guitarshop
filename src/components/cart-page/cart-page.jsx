@@ -19,6 +19,7 @@ function CartPage({cartGuitars, onCartDelete}) {
 
   const [popupData, setPopupData] = useState(null);
   const [promo, setPromo] = useState('');
+  const [promoFake, setPromoFake] = useState(false);
 
   const [countGoods, setCountGoods] = useState(cartGuitars.map((guitar) => ({
     id: guitar.id,
@@ -35,13 +36,13 @@ function CartPage({cartGuitars, onCartDelete}) {
 
   const handleCountType = (evt) => {
     const number = getNumberFromString(evt.target.value);
-    const id = parseInt(evt.target.id, 10);
+    const id = parseInt(evt.target.dataset.id, 10);
 
     if (number < MIN_COUNT || number > MAX_COUNT) {
       return;
     }
 
-    setCountGoods(countGoods.map((item) => item.dataset.id === id ? {
+    setCountGoods(countGoods.map((item) => item.id === id ? {
       id: item.id,
       price: item.price,
       count: number,
@@ -130,24 +131,26 @@ function CartPage({cartGuitars, onCartDelete}) {
   const handlePromoClick = () => {
     const promoString = promo.toUpperCase().trim();
 
-
     switch(promoString) {
       case Promo.GITARAHIT.title.toUpperCase().trim(): {
+        setPromoFake(false);
         return setSumAll(sumAll - (sumAll / 100 * Promo.GITARAHIT.percent));
       }
       case Promo.SUPERGITARA.title.toUpperCase().trim(): {
+        setPromoFake(false);
         return setSumAll(sumAll - Promo.SUPERGITARA.discount);
       }
       case Promo.GITARA2020.title.toUpperCase().trim(): {
+        setPromoFake(false);
 
         if (Promo.GITARA2020.discount > sumAll / 100 * Promo.GITARA2020.percent) {
-          console.log(sumAll);
           return setSumAll(sumAll - (sumAll / 100 * Promo.GITARA2020.percent));
         }
 
         return setSumAll(sumAll - Promo.GITARA2020.discount);
       }
       default: {
+        setPromoFake(true);
         return;
       }
     }
@@ -213,6 +216,7 @@ function CartPage({cartGuitars, onCartDelete}) {
             <section className="cart__promo-code">
               <p className="cart__promo-title">Промокод на скидку</p>
               <p className="cart__promo-text">Введите свой промокод, если он у вас есть.</p>
+              {promoFake && <p className="cart__promo-text">Промокод не действителен</p>}
 
               <input type="text" className="cart__promo-input" maxLength="18" value={promo} onChange={handlePromoType}/>
 

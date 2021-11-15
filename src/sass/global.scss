@@ -51,11 +51,11 @@
   }
 
   &:active {
-    color: #2C36F2;
+    color: #E27F00;
     opacity: 1;
-    fill: rgba($color: #2C36F2, $alpha: 0.75);
+    fill: rgba($color: #E27F00, $alpha: 0.75);
 
-    filter: drop-shadow(0 0 15px #2C36F2);
+    filter: drop-shadow(0 0 15px #E27F00);
   }
 }
 
@@ -94,7 +94,7 @@
     color: #2C36F2;
     opacity: 1;
 
-    background-color: #F6F7FF;
+    background-color: #E27F00;
     box-shadow: 0 0 10px rgba($color: #2C36F2, $alpha: 0.5);
   }
 }

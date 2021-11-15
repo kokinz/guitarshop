@@ -8,11 +8,11 @@ import {getGuitars} from '../../store/guitars-data/selectors.js';
 import {AppRoute, GuitarType, StringsCount} from '../../const';
 import Footer from "../footer/footer";
 import Header from "../header/header";
-import { getNumberFromString, getNumberWithSpaces } from "../../utils.js";
-// import PopupDelete from "../popup/popup-delete/popup-delete";
+import {getNumberFromString, getNumberWithSpaces} from "../../utils.js";
+
 import PopupAdded from "../popup/popup-added/popup-added";
 import PopupAdd from "../popup/popup-add/popup-add";
-import { cartAdd } from "../../store/action.js";
+import {cartAdd} from "../../store/action.js";
 
 function CatalogPage({guitars, onCartAdd}) {
   const SHOWN_COUNT = 9;
@@ -378,7 +378,7 @@ function CatalogPage({guitars, onCartAdd}) {
   };
 
   const handleBuyClick = (evt) => {
-    const id = parseInt(evt.target.id, 10);
+    const id = parseInt(evt.target.dataset.id, 10);
     const result = currentGuitars.find((guitar) => guitar.id === id);
 
     evt.preventDefault();
@@ -543,7 +543,7 @@ function CatalogPage({guitars, onCartAdd}) {
 
                       <p className="catalog__item-cart-wrapper">
                         <a className="catalog__item-button link button" href="/#">Подробнее</a>
-                        <a className="catalog__item-button catalog__item-button--buy link button" id={guitar.id} href="/#" onClick={handleBuyClick}>
+                        <a className="catalog__item-button catalog__item-button--buy link button" data-id={guitar.id} href="/#" onClick={handleBuyClick}>
                           <svg className="catalog__item-button-image" width="12" height="13" viewBox="0 0 12 13">
                             <use xlinkHref="#cart-buy" />
                           </svg>

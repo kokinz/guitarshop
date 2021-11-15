@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import { getNumberWithSpaces } from "../../../utils";
-import { guitarPropType } from "../../../store/data";
+import {getNumberWithSpaces} from "../../../utils";
+import {guitarPropType} from "../../../store/data";
 
 function PopupAdd({guitar, onClose, onCartAdd}) {
   const handlePopupClose = (evt) => {
