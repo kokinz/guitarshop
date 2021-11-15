@@ -1,11 +1,14 @@
 import {ActionType} from '../action.js';
 
+import {guitars} from '../data.js';
+///////////////////////
+
 const initialState = {
-  cart: [],
+  cart: guitars.slice(2, 4),
 };
 
 const cartDelete = (item, cart) => {
-  const index = cart.findIndex((element) => element.guitar.id === item.id)
+  const index = cart.findIndex((element) => element.id === item.id)
 
   if (index > -1) {
     return [...cart.slice(0, index), ...cart.slice(index + 1)];

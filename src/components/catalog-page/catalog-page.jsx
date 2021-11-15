@@ -393,6 +393,7 @@ function CatalogPage({guitars, onCartAdd}) {
     setPopupGuitar(null);
     document.body.style.height = '100%';
     document.body.style.overflow = 'unset';
+    window.removeEventListener('keydown', handleEscKeydown);
   };
 
   const handleGuitarAddCartClick = (guitar) => {
@@ -405,6 +406,7 @@ function CatalogPage({guitars, onCartAdd}) {
     setPopupGuitarAdded(false);
     document.body.style.height = '100%';
     document.body.style.overflow = 'unset';
+    window.removeEventListener('keydown', handleEscKeydown);
   };
 
   return (
@@ -580,7 +582,6 @@ function CatalogPage({guitars, onCartAdd}) {
 
             </section>
 
-            {/* <PopupDelete /> */}
             {popupGuitar && <PopupAdd guitar={popupGuitar} onClose={handlePopupAddClose} onCartAdd={handleGuitarAddCartClick} /> }
             {popupGuitarAdded && <PopupAdded onClose={handlePopupAddedClose} /> }
           </section>

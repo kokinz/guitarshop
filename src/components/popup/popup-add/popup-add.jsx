@@ -43,7 +43,7 @@ function PopupAdd({guitar, onClose, onCartAdd}) {
 }
 
 PopupAdd.propTypes = {
-  guitar: PropTypes.shape(guitarPropType).isRequired,
+  guitar: guitarPropType.isRequired,
   onCartAdd: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
 };
