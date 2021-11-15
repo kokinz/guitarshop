@@ -127,6 +127,7 @@ function CatalogPage({guitars}) {
       }
     }
 
+    setPagesCount(Math.ceil(array.length / SHOWN_COUNT));
     setCurrentGuitars(array);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [guitarType,
@@ -358,8 +359,6 @@ function CatalogPage({guitars}) {
 
   const handleLinkPageClick = (evt) => {
     evt.preventDefault();
-
-    console.log(evt.target.id);
     setActivePage(parseInt(evt.target.id, 10));
 };
 
@@ -469,7 +468,7 @@ function CatalogPage({guitars}) {
 
             <section className="catalog__list">
               {currentGuitars.length ? <ul className="catalog__cards-list list">
-                {currentGuitars.map((guitar) => (
+                {currentGuitars.slice((activePage - 1) * SHOWN_COUNT, activePage * SHOWN_COUNT).map((guitar) => (
                   <li className="catalog__item" key={guitar.reference}>
                     <article>
                       <h3 className="visually-hidden">{guitar.name}</h3>
@@ -509,7 +508,7 @@ function CatalogPage({guitars}) {
                 ))}
               </ul> : <h2 >Результатов не найдено</h2>}
 
-              {currentGuitars.length ?
+              {pagesCount !== 1 ?
               <ul className="catalog__pagination-list list">
                 {activePage !== 1 ?
                 <li className="catalog__pagination-item">
