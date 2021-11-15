@@ -3,14 +3,14 @@ const ActionType = {
   CART_DELETE: 'films/loadFilm',
 };
 
-const cartAdd = (cart) => ({
+const cartAdd = (guitar) => ({
   type: ActionType.CART_ADD,
-  payload: cart,
+  payload: guitar,
 });
 
-const cartDelete = (cart) => ({
-  type: ActionType.GET_FILMS_BY_GENRE,
-  payload: cart,
+const cartDelete = (guitar) => ({
+  type: ActionType.CART_DELETE,
+  payload: guitar,
 });
 
 export {ActionType, cartAdd, cartDelete};

@@ -10,10 +10,11 @@ import Footer from "../footer/footer";
 import Header from "../header/header";
 import { getNumberFromString, getNumberWithSpaces } from "../../utils.js";
 // import PopupDelete from "../popup/popup-delete/popup-delete";
-// import PopupAdded from "../popup/popup-added/popup-added";
-// import PopupAdd from "../popup/popup-add/popup-add";
+import PopupAdded from "../popup/popup-added/popup-added";
+import PopupAdd from "../popup/popup-add/popup-add";
+import { cartAdd } from "../../store/action.js";
 
-function CatalogPage({guitars}) {
+function CatalogPage({guitars, onCartAdd}) {
   const SHOWN_COUNT = 9;
 
   const Price = {
@@ -36,6 +37,8 @@ function CatalogPage({guitars}) {
   const [currentGuitars, setCurrentGuitars] = useState(guitars);
   const [activePage, setActivePage] = useState(1);
   const [pagesCount, setPagesCount] = useState(Math.ceil(currentGuitars.length / SHOWN_COUNT));
+  const [popupGuitar, setPopupGuitar] = useState(false);
+  const [popupGuitarAdded, setPopupGuitarAdded] = useState(false);
 
   const [priceRange, setPriceRange] = useState({
     max: Price.MAX,
@@ -360,7 +363,49 @@ function CatalogPage({guitars}) {
   const handleLinkPageClick = (evt) => {
     evt.preventDefault();
     setActivePage(parseInt(evt.target.id, 10));
-};
+  };
+
+  const handleEscKeydown = (evt) => {
+    if (evt.key === ('Escape' || 'Esc')) {
+      evt.preventDefault();
+
+      setPopupGuitar(null);
+      setPopupGuitarAdded(false);
+      document.body.style.height = '100%';
+      document.body.style.overflow = 'unset';
+      window.removeEventListener('keydown', handleEscKeydown);
+    }
+  };
+
+  const handleBuyClick = (evt) => {
+    const id = parseInt(evt.target.id, 10);
+    const result = currentGuitars.find((guitar) => guitar.id === id);
+
+    evt.preventDefault();
+
+    setPopupGuitar(result);
+    document.body.style.height = '100vh';
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleEscKeydown);
+  };
+
+  const handlePopupAddClose = () => {
+    setPopupGuitar(null);
+    document.body.style.height = '100%';
+    document.body.style.overflow = 'unset';
+  };
+
+  const handleGuitarAddCartClick = (guitar) => {
+    onCartAdd(guitar);
+    setPopupGuitar(null);
+    setPopupGuitarAdded(true);
+  };
+
+  const handlePopupAddedClose = () => {
+    setPopupGuitarAdded(false);
+    document.body.style.height = '100%';
+    document.body.style.overflow = 'unset';
+  };
 
   return (
     <>
@@ -496,7 +541,7 @@ function CatalogPage({guitars}) {
 
                       <p className="catalog__item-cart-wrapper">
                         <a className="catalog__item-button link button" href="/#">Подробнее</a>
-                        <a className="catalog__item-button catalog__item-button--buy link button" href="/#">
+                        <a className="catalog__item-button catalog__item-button--buy link button" id={guitar.id} href="/#" onClick={handleBuyClick}>
                           <svg className="catalog__item-button-image" width="12" height="13" viewBox="0 0 12 13">
                             <use xlinkHref="#cart-buy" />
                           </svg>
@@ -536,8 +581,8 @@ function CatalogPage({guitars}) {
             </section>
 
             {/* <PopupDelete /> */}
-            {/* <PopupAdd /> */}
-            {/* <PopupAdded /> */}
+            {popupGuitar && <PopupAdd guitar={popupGuitar} onClose={handlePopupAddClose} onCartAdd={handleGuitarAddCartClick} /> }
+            {popupGuitarAdded && <PopupAdded onClose={handlePopupAddedClose} /> }
           </section>
         </div>
       </main>
@@ -549,11 +594,18 @@ function CatalogPage({guitars}) {
 
 CatalogPage.propTypes = {
   guitars: PropTypes.arrayOf(guitarPropType).isRequired,
+  onCartAdd: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   guitars: getGuitars(state),
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  onCartAdd(guitar) {
+    dispatch(cartAdd(guitar))
+  }
+});
+
 export {CatalogPage};
-export default connect(mapStateToProps, null)(CatalogPage);
+export default connect(mapStateToProps, mapDispatchToProps)(CatalogPage);
