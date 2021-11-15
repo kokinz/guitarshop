@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import {guitarPropType} from '../../store/data.js';
 
 import {getCart} from '../../store/cart-data/selectors.js';
-
 import {AppRoute} from '../../const';
 
 function Header({cart}) {

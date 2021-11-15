@@ -14,7 +14,8 @@ import { getNumberFromString, getNumberWithSpaces } from "../../utils.js";
 // import PopupAdd from "../popup/popup-add/popup-add";
 
 function CatalogPage({guitars}) {
-  // const SHOWN_COUNT = 9;
+  const SHOWN_COUNT = 9;
+
   const Price = {
     MAX: 35000,
     MIN: 1700,
@@ -33,6 +34,8 @@ function CatalogPage({guitars}) {
   const [sort, setSort] = useState(null);
   const [sortDirection, setSortDirection] = useState(null);
   const [currentGuitars, setCurrentGuitars] = useState(guitars);
+  const [activePage, setActivePage] = useState(1);
+  const [pagesCount, setPagesCount] = useState(Math.ceil(currentGuitars.length / SHOWN_COUNT));
 
   const [priceRange, setPriceRange] = useState({
     max: Price.MAX,
@@ -341,6 +344,25 @@ function CatalogPage({guitars}) {
     }
   };
 
+  const handleNextPageClick = (evt) => {
+    evt.preventDefault();
+
+    setActivePage(activePage + 1);
+  };
+
+  const handlePrevPageClick = (evt) => {
+    evt.preventDefault();
+
+    setActivePage(activePage - 1);
+  };
+
+  const handleLinkPageClick = (evt) => {
+    evt.preventDefault();
+
+    console.log(evt.target.id);
+    setActivePage(parseInt(evt.target.id, 10));
+};
+
   return (
     <>
       <Header />
@@ -489,31 +511,27 @@ function CatalogPage({guitars}) {
 
               {currentGuitars.length ?
               <ul className="catalog__pagination-list list">
+                {activePage !== 1 ?
                 <li className="catalog__pagination-item">
-                  <a href="/#" className="catalog__pagination-button catalog__pagination-button--active link">
-                    1
+                  <a href="/#" className="catalog__pagination-button catalog__pagination-button--large link" onClick={handlePrevPageClick}>
+                    Назад
                   </a>
-                </li>
+                </li> : ''}
+
+                {Array.from({length: pagesCount}).map((_elem, index) => (
+                  <li className="catalog__pagination-item" key={index + 1}>
+                    <a href="/#" id={index + 1} className={`catalog__pagination-button link ${activePage === index + 1 ? 'catalog__pagination-button--active' : ''}`} onClick={handleLinkPageClick}>
+                      {index + 1}
+                    </a>
+                  </li>
+                ))}
+
+                {activePage !== pagesCount ?
                 <li className="catalog__pagination-item">
-                  <a href="/#" className="catalog__pagination-button link">
-                    2
-                  </a>
-                </li>
-                <li className="catalog__pagination-item">
-                  <a href="/#" className="catalog__pagination-button link">
-                    ...
-                  </a>
-                </li>
-                <li className="catalog__pagination-item">
-                  <a href="/#" className="catalog__pagination-button link">
-                    7
-                  </a>
-                </li>
-                <li className="catalog__pagination-item">
-                  <a href="/#" className="catalog__pagination-button catalog__pagination-button--large link">
+                  <a href="/#" className="catalog__pagination-button catalog__pagination-button--large link" onClick={handleNextPageClick}>
                     Далее
                   </a>
-                </li>
+                </li> : ''}
               </ul> : ''}
 
             </section>
