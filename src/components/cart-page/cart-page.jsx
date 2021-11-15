@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {guitarPropType} from '../../store/data.js';
+import {guitarPropType, Promo} from '../../store/data.js';
 import {getCart} from '../../store/cart-data/selectors.js';
 
 import {AppRoute} from '../../const';
@@ -18,6 +18,7 @@ function CartPage({cartGuitars, onCartDelete}) {
   const MAX_COUNT = 999;
 
   const [popupData, setPopupData] = useState(null);
+  const [promo, setPromo] = useState('');
 
   const [countGoods, setCountGoods] = useState(cartGuitars.map((guitar) => ({
     id: guitar.id,
@@ -25,6 +26,12 @@ function CartPage({cartGuitars, onCartDelete}) {
     count: MIN_COUNT,
     sum: guitar.price * MIN_COUNT,
   })));
+
+  const [sumAll, setSumAll] = useState(countGoods.length ? countGoods.map((good) => good.sum).reduce((prev, next) => prev + next) : 0);
+
+  useEffect(() => {
+    setSumAll(countGoods.length ? countGoods.map((good) => good.sum).reduce((prev, next) => prev + next) : 0);
+  }, [countGoods]);
 
   const handleCountType = (evt) => {
     const number = getNumberFromString(evt.target.value);
@@ -116,6 +123,36 @@ function CartPage({cartGuitars, onCartDelete}) {
     handlePopupClose();
   };
 
+  const handlePromoType = (evt) =>{
+    setPromo(evt.target.value);
+  };
+
+  const handlePromoClick = () => {
+    const promoString = promo.toUpperCase().trim();
+
+
+    switch(promoString) {
+      case Promo.GITARAHIT.title.toUpperCase().trim(): {
+        return setSumAll(sumAll - (sumAll / 100 * Promo.GITARAHIT.percent));
+      }
+      case Promo.SUPERGITARA.title.toUpperCase().trim(): {
+        return setSumAll(sumAll - Promo.SUPERGITARA.discount);
+      }
+      case Promo.GITARA2020.title.toUpperCase().trim(): {
+
+        if (Promo.GITARA2020.discount > sumAll / 100 * Promo.GITARA2020.percent) {
+          console.log(sumAll);
+          return setSumAll(sumAll - (sumAll / 100 * Promo.GITARA2020.percent));
+        }
+
+        return setSumAll(sumAll - Promo.GITARA2020.discount);
+      }
+      default: {
+        return;
+      }
+    }
+  };
+
   return (
     <>
       <Header />
@@ -177,16 +214,17 @@ function CartPage({cartGuitars, onCartDelete}) {
               <p className="cart__promo-title">Промокод на скидку</p>
               <p className="cart__promo-text">Введите свой промокод, если он у вас есть.</p>
 
-              <input type="text" className="cart__promo-input" defaultValue="GITARAHIT" />
+              <input type="text" className="cart__promo-input" maxLength="18" value={promo} onChange={handlePromoType}/>
 
-              <button className="cart__promo-button button">
+              <button className="cart__promo-button button" onClick={handlePromoClick}>
                 Применить купон
               </button>
             </section>
 
             {cartGuitars.length ?
-            <p className="cart__sum">Всего: {getNumberWithSpaces(countGoods.map((good) => good.sum).reduce((prev, next) => prev + next))} ₽ </p> :
-            <p className="cart__sum">Корзина пуста</p>}
+            <p className="cart__sum">Всего: {getNumberWithSpaces(sumAll)} ₽ </p> :
+            <p className="cart__sum">Корзина пуста</p>
+            }
 
             <button className="cart__order button">Оформить заказ</button>
 

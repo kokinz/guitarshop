@@ -274,6 +274,24 @@ const guitars = [
   },
 ];
 
+const Promo = {
+  GITARAHIT: {
+    title: 'GITARAHIT ',
+    percent: 10,
+    discount: 0,
+  },
+  SUPERGITARA : {
+    title: 'SUPERGITARA ',
+    percent: 0,
+    discount: 700 ,
+  },
+  GITARA2020: {
+    title: 'GITARA2020 ',
+    percent: 30,
+    discount: 3000 ,
+  }
+}
+
 const guitarPropType = PropTypes.shape({
   id: PropTypes.number,
   reference: PropTypes.string,
@@ -285,4 +303,4 @@ const guitarPropType = PropTypes.shape({
   image: PropTypes.string,
 });
 
-export {guitars, guitarPropType};
+export {guitars, Promo, guitarPropType};

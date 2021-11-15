@@ -1,10 +1,7 @@
 import {ActionType} from '../action.js';
 
-import {guitars} from '../data.js';
-///////////////////////
-
 const initialState = {
-  cart: guitars.slice(2, 4),
+  cart: [],
 };
 
 const cartDelete = (item, cart) => {
