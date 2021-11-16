@@ -1,6 +1,6 @@
 const ActionType = {
-  CART_ADD: 'films/loadFilms',
-  CART_DELETE: 'films/loadFilm',
+  CART_ADD: 'cart/addItem',
+  CART_DELETE: 'cart/deleteItem',
 };
 
 const cartAdd = (guitar) => ({

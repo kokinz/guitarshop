@@ -12,6 +12,10 @@ function PopupAdd({guitar, onClose, onCartAdd}) {
     onClose();
   };
 
+  const handleAddClick = () => {
+    onCartAdd(guitar);
+  };
+
   return (
     <section className="catalog__popup-overlay overlay" data-name="close" onClick={handlePopupClose}>
       <div className="catalog__popup popup">
@@ -29,7 +33,7 @@ function PopupAdd({guitar, onClose, onCartAdd}) {
         </div>
 
 
-        <button className="popup__add-button button" onClick={() => onCartAdd(guitar)}>
+        <button className="popup__add-button button" onClick={handleAddClick}>
           Добавить в корзину
         </button>
 

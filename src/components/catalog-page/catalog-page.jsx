@@ -14,24 +14,24 @@ import PopupAdded from "../popup/popup-added/popup-added";
 import PopupAdd from "../popup/popup-add/popup-add";
 import {cartAdd} from "../../store/action.js";
 
+const SHOWN_COUNT = 9;
+
+const Price = {
+  MAX: 35000,
+  MIN: 1700,
+};
+
+const SortType = {
+  PRICE: 'byPrice',
+  POPULAR: 'byPopular',
+};
+
+const SortDirection= {
+  UP: 'up',
+  DOWN: 'down',
+};
+
 function CatalogPage({guitars, onCartAdd}) {
-  const SHOWN_COUNT = 9;
-
-  const Price = {
-    MAX: 35000,
-    MIN: 1700,
-  };
-
-  const SortType = {
-    PRICE: 'byPrice',
-    POPULAR: 'byPopular',
-  };
-
-  const SortDirection= {
-    UP: 'up',
-    DOWN: 'down',
-  };
-
   const [sort, setSort] = useState(null);
   const [sortDirection, setSortDirection] = useState(null);
   const [currentGuitars, setCurrentGuitars] = useState(guitars);
@@ -565,7 +565,7 @@ function CatalogPage({guitars, onCartAdd}) {
                 </li> : ''}
 
                 {Array.from({length: pagesCount}).map((_elem, index) => (
-                  <li className="catalog__pagination-item" key={index + 1}>
+                  <li className="catalog__pagination-item" key={Date.now() * Math.random()}>
                     <a href="/#" id={index + 1} className={`catalog__pagination-button link ${activePage === index + 1 ? 'catalog__pagination-button--active' : ''}`} onClick={handleLinkPageClick}>
                       {index + 1}
                     </a>
@@ -579,7 +579,6 @@ function CatalogPage({guitars, onCartAdd}) {
                   </a>
                 </li> : ''}
               </ul> : ''}
-
             </section>
 
             {popupGuitar && <PopupAdd guitar={popupGuitar} onClose={handlePopupAddClose} onCartAdd={handleGuitarAddCartClick} /> }

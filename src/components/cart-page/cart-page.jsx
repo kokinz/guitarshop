@@ -13,13 +13,14 @@ import PopupDelete from '../popup/popup-delete/popup-delete';
 import {cartDelete} from '../../store/action.js';
 import {getNumberFromString, getNumberWithSpaces} from '../../utils.js';
 
-function CartPage({cartGuitars, onCartDelete}) {
-  const MIN_COUNT = 1;
-  const MAX_COUNT = 999;
+const MIN_COUNT = 1;
+const MAX_COUNT = 999;
 
+function CartPage({cartGuitars, onCartDelete}) {
   const [popupData, setPopupData] = useState(null);
   const [promo, setPromo] = useState('');
   const [promoFake, setPromoFake] = useState(false);
+  const [promoActivated, setPromoActivated] = useState(false);
 
   const [countGoods, setCountGoods] = useState(cartGuitars.map((guitar) => ({
     id: guitar.id,
@@ -125,23 +126,33 @@ function CartPage({cartGuitars, onCartDelete}) {
   };
 
   const handlePromoType = (evt) =>{
-    setPromo(evt.target.value);
+    if (!promoActivated) {
+      setPromo(evt.target.value);
+      return;
+    }
   };
 
   const handlePromoClick = () => {
     const promoString = promo.toUpperCase().trim();
 
+    if (promoActivated) {
+      return;
+    }
+
     switch(promoString) {
       case Promo.GITARAHIT.title.toUpperCase().trim(): {
         setPromoFake(false);
+        setPromoActivated(true);
         return setSumAll(sumAll - (sumAll / 100 * Promo.GITARAHIT.percent));
       }
       case Promo.SUPERGITARA.title.toUpperCase().trim(): {
         setPromoFake(false);
+        setPromoActivated(true);
         return setSumAll(sumAll - Promo.SUPERGITARA.discount);
       }
       case Promo.GITARA2020.title.toUpperCase().trim(): {
         setPromoFake(false);
+        setPromoActivated(true);
 
         if (Promo.GITARA2020.discount > sumAll / 100 * Promo.GITARA2020.percent) {
           return setSumAll(sumAll - (sumAll / 100 * Promo.GITARA2020.percent));
@@ -151,6 +162,7 @@ function CartPage({cartGuitars, onCartDelete}) {
       }
       default: {
         setPromoFake(true);
+        setPromoActivated(false);
         return;
       }
     }
@@ -218,7 +230,7 @@ function CartPage({cartGuitars, onCartDelete}) {
               <p className="cart__promo-text">Введите свой промокод, если он у вас есть.</p>
               {promoFake && <p className="cart__promo-text">Промокод не действителен</p>}
 
-              <input type="text" className="cart__promo-input" maxLength="18" value={promo} onChange={handlePromoType}/>
+              <input type="text" className="cart__promo-input" maxLength="18" value={promo} disabled={promoActivated} onChange={handlePromoType}/>
 
               <button className="cart__promo-button button" onClick={handlePromoClick}>
                 Применить купон

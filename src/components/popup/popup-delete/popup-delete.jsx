@@ -12,6 +12,10 @@ function PopupDelete({guitar, onClose, onCartDelete}) {
     onClose();
   };
 
+  const handleDeleteClick = () => {
+    onCartDelete(guitar);
+  };
+
   return (
     <section className="catalog__popup-overlay overlay" data-name="close" onClick={handlePopupClose}>
       <div className="catalog__popup popup">
@@ -29,7 +33,7 @@ function PopupDelete({guitar, onClose, onCartDelete}) {
         </div>
 
 
-        <button className="popup__delete-button button" onClick={() => onCartDelete(guitar)}>
+        <button className="popup__delete-button button" onClick={handleDeleteClick}>
           Удалить товар
         </button>
 
