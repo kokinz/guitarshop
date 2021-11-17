@@ -126,6 +126,10 @@
   border: 0.7px solid #9F9E9E;
   border-radius: 2px;
   cursor: pointer;
+
+  &:hover {
+    border: 0.7px solid #585757;
+  }
 }
 
 .filter__label {
@@ -153,6 +157,15 @@
     border: 0.7px solid #9F9E9E;
     box-sizing: border-box;
     border-radius: 2px;
+  }
+
+  &:hover::before {
+    border: 0.7px solid #585757;
+  }
+
+  &:active::before {
+    border: 0.7px solid #C1C1C1;
+    outline: none;
   }
 }
 
@@ -419,6 +432,14 @@
   &--buy {
     width: 87px;
     background-color: #E27F00;
+
+    &:hover {
+      background-color: #FFA839;
+    }
+
+    &:active {
+      background-color: #DA8B26;
+    }
   }
 }
 

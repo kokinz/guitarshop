@@ -306,4 +306,12 @@
 
   background-color: #E27F00;
   border-radius: 2px;
+
+  &:hover {
+    background-color: #FFA839;
+  }
+
+  &:active {
+    background-color: #DA8B26;
+  }
 }

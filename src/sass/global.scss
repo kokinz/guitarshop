@@ -47,15 +47,11 @@
   cursor: pointer;
 
   &:hover {
-    opacity: 0.4;
+    opacity: 0.7;
   }
 
   &:active {
-    color: #E27F00;
-    opacity: 1;
-    fill: rgba($color: #E27F00, $alpha: 0.75);
-
-    filter: drop-shadow(0 0 15px #E27F00);
+    opacity: 0.5;
   }
 }
 
@@ -82,20 +78,22 @@
 
   cursor: pointer;
 
+  color: #FFFFFF;
   background: #F6F7FF;
   border: none;
   border-radius: 4px;
 
   &:hover {
-    opacity: 0.4;
+    color: #FFFFFF;
+    background-color: #585757;
+    opacity: 1;
   }
 
   &:active {
-    color: #2C36F2;
+    color: #FFFFFF;
     opacity: 1;
 
-    background-color: #E27F00;
-    box-shadow: 0 0 10px rgba($color: #2C36F2, $alpha: 0.5);
+    background-color: #9F9E9E;
   }
 }
 
