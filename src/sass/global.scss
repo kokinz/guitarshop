@@ -21,6 +21,12 @@
   height: 100%;
 
   font-family: 'Droid Sans', 'Tahoma', sans-serif;
+
+  overflow-x: hidden;
+
+  @media (max-width: 1019px) {
+    overflow-x: auto;
+  }
 }
 
 .root {

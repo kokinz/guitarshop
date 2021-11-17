@@ -264,4 +264,14 @@
     background-color: #9F9E9E;
     transform: rotate(-45deg);
   }
+
+  &:hover {
+    background-color: transparent;
+    filter: drop-shadow(0 0 7px #000000);
+  }
+
+  &:active {
+    background-color: transparent;
+    filter: drop-shadow(0 0 4px #000000);
+  }
  }

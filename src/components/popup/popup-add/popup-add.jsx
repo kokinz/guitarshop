@@ -33,7 +33,7 @@ function PopupAdd({guitar, onClose, onCartAdd}) {
         </div>
 
 
-        <button className="popup__add-button button" onClick={handleAddClick}>
+        <button className="popup__add-button button" onClick={handleAddClick} autoFocus>
           Добавить в корзину
         </button>
 

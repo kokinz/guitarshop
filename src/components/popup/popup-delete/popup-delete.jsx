@@ -33,7 +33,7 @@ function PopupDelete({guitar, onClose, onCartDelete}) {
         </div>
 
 
-        <button className="popup__delete-button button" onClick={handleDeleteClick}>
+        <button className="popup__delete-button button" onClick={handleDeleteClick} autoFocus>
           Удалить товар
         </button>
 

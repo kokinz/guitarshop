@@ -59,7 +59,7 @@ function CartPage({cartGuitars, onCartDelete}) {
         if (item.count - 1 < MIN_COUNT) {
           setPopupData(cartGuitars[index]);
           document.body.style.height = '100vh';
-          document.body.style.overflow = 'hidden';
+          document.body.style.overflowY = 'hidden';
           window.addEventListener('keydown', handleEscKeydown);
         }
 
@@ -92,7 +92,7 @@ function CartPage({cartGuitars, onCartDelete}) {
 
       setPopupData(null);
       document.body.style.height = '100%';
-      document.body.style.overflow = 'unset';
+      document.body.style.overflowY = 'unset';
       window.removeEventListener('keydown', handleEscKeydown);
     }
   };
@@ -100,7 +100,7 @@ function CartPage({cartGuitars, onCartDelete}) {
   const handlePopupClose = () => {
     setPopupData(null);
     document.body.style.height = '100%';
-    document.body.style.overflow = 'unset';
+    document.body.style.overflowY = 'unset';
     window.removeEventListener('keydown', handleEscKeydown);
   }
 
@@ -110,7 +110,7 @@ function CartPage({cartGuitars, onCartDelete}) {
     setPopupData(cartGuitars.find((guitar) => guitar.id === id));
 
     document.body.style.height = '100vh';
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflowY = 'hidden';
     window.addEventListener('keydown', handleEscKeydown);
   }
 

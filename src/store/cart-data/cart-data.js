@@ -14,12 +14,22 @@ const cartDelete = (item, cart) => {
   return cart;
 }
 
+const cartAdd = (item, cart) => {
+  const index = cart.findIndex((element) => element.id === item.id)
+
+  if (index > -1) {
+    return cart;
+  }
+
+  return [...cart, item];
+}
+
 const cartData = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.CART_ADD:
       return {
         ...state,
-        cart: [...state.cart, action.payload],
+        cart: cartAdd(action.payload, state.cart),
       };
     case ActionType.CART_DELETE:
       return {

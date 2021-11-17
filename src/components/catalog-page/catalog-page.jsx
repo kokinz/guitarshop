@@ -372,7 +372,7 @@ function CatalogPage({guitars, onCartAdd}) {
       setPopupGuitar(null);
       setPopupGuitarAdded(false);
       document.body.style.height = '100%';
-      document.body.style.overflow = 'unset';
+      document.body.style.overflowY = 'unset';
       window.removeEventListener('keydown', handleEscKeydown);
     }
   };
@@ -385,14 +385,14 @@ function CatalogPage({guitars, onCartAdd}) {
 
     setPopupGuitar(result);
     document.body.style.height = '100vh';
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflowY = 'hidden';
     window.addEventListener('keydown', handleEscKeydown);
   };
 
   const handlePopupAddClose = () => {
     setPopupGuitar(null);
     document.body.style.height = '100%';
-    document.body.style.overflow = 'unset';
+    document.body.style.overflowY = 'unset';
     window.removeEventListener('keydown', handleEscKeydown);
   };
 
@@ -405,7 +405,7 @@ function CatalogPage({guitars, onCartAdd}) {
   const handlePopupAddedClose = () => {
     setPopupGuitarAdded(false);
     document.body.style.height = '100%';
-    document.body.style.overflow = 'unset';
+    document.body.style.overflowY = 'unset';
     window.removeEventListener('keydown', handleEscKeydown);
   };
 

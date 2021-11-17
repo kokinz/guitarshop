@@ -19,7 +19,7 @@ function PopupAdded({onClose}) {
           Товар успешно добавлен в корзину
         </h2>
 
-        <Link className="popup__cart-button link button" to={AppRoute.CART} data-name="close" onClick={handlePopupClose}>
+        <Link className="popup__cart-button link button" to={AppRoute.CART} data-name="close" onClick={handlePopupClose} autoFocus>
           Перейти в корзину
         </Link>
 
