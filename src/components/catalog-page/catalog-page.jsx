@@ -440,9 +440,11 @@ function CatalogPage({guitars, onCartAdd}) {
                 <fieldset className="filter__fieldset filter__fieldset--price">
                   <h3 className="filter__fieldset-title">Цена, ₽</h3>
 
-                  <input type="text" className="filter__input" onChange={handleMinPriceType} value={getNumberWithSpaces(priceRange.min)} />
+                  <input type="text" className="filter__input" id="input-min" onChange={handleMinPriceType} value={getNumberWithSpaces(priceRange.min)} />
+                  <label htmlFor="input-min" className="visually-hidden">Минимум</label>
 
-                  <input type="text" className="filter__input" onChange={handleMaxPriceType} value={getNumberWithSpaces(priceRange.max)} />
+                  <input type="text" className="filter__input" id="input-max" onChange={handleMaxPriceType} value={getNumberWithSpaces(priceRange.max)} />
+                  <label htmlFor="input-max" className="visually-hidden">Максимум</label>
                 </fieldset>
 
                 <fieldset className="filter__fieldset filter__fieldset--type">
