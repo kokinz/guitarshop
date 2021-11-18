@@ -18,10 +18,12 @@ const cartAdd = (item, cart) => {
   const index = cart.findIndex((element) => element.id === item.id)
 
   if (index > -1) {
+    cart[index].count = cart[index].count + 1;
+
     return cart;
   }
 
-  return [...cart, item];
+  return [...cart, {...item, count: 1}];
 }
 
 const cartData = (state = initialState, action) => {

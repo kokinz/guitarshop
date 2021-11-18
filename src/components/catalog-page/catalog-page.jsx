@@ -32,8 +32,8 @@ const SortDirection= {
 };
 
 function CatalogPage({guitars, onCartAdd}) {
-  const [focusedInputMin, setFocusedInputMin] = React.useState(false);
-  const [focusedInputMax, setFocusedInputMax] = React.useState(false);
+  const [focusedInputMin, setFocusedInputMin] = useState(false);
+  const [focusedInputMax, setFocusedInputMax] = useState(false);
   const [sort, setSort] = useState(null);
   const [sortDirection, setSortDirection] = useState(null);
   const [currentGuitars, setCurrentGuitars] = useState(guitars);

@@ -25,28 +25,25 @@ function CartPage({cartGuitars, onCartDelete}) {
   const [countGoods, setCountGoods] = useState(cartGuitars.map((guitar) => ({
     id: guitar.id,
     price: guitar.price,
-    count: MIN_COUNT,
-    sum: guitar.price * MIN_COUNT,
+    count: guitar.count,
+    sum: guitar.price * guitar.count,
   })));
 
   const [sumAll, setSumAll] = useState(countGoods.length ? countGoods.map((good) => good.sum).reduce((prev, next) => prev + next) : 0);
 
   useEffect(() => {
     setSumAll(countGoods.length ? countGoods.map((good) => good.sum).reduce((prev, next) => prev + next) : 0);
+    setPromoActivated(false);
   }, [countGoods]);
 
   const handleCountType = (evt) => {
     const number = getNumberFromString(evt.target.value);
     const id = parseInt(evt.target.dataset.id, 10);
 
-    if (number < MIN_COUNT || number > MAX_COUNT) {
-      return;
-    }
-
     setCountGoods(countGoods.map((item) => item.id === id ? {
       id: item.id,
       price: item.price,
-      count: number,
+      count: number ? number : 0,
       sum: item.price * number,
     } : item));
   };
@@ -135,7 +132,7 @@ function CartPage({cartGuitars, onCartDelete}) {
   const handlePromoClick = () => {
     const promoString = promo.toUpperCase().trim();
 
-    if (promoActivated) {
+    if (promoActivated || sumAll === 0) {
       return;
     }
 
