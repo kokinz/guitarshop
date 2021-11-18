@@ -32,6 +32,8 @@ const SortDirection= {
 };
 
 function CatalogPage({guitars, onCartAdd}) {
+  const [focusedInputMin, setFocusedInputMin] = React.useState(false);
+  const [focusedInputMax, setFocusedInputMax] = React.useState(false);
   const [sort, setSort] = useState(null);
   const [sortDirection, setSortDirection] = useState(null);
   const [currentGuitars, setCurrentGuitars] = useState(guitars);
@@ -46,9 +48,9 @@ function CatalogPage({guitars, onCartAdd}) {
   });
 
   const [guitarType, setGuitarType] = useState({
-    electro: true,
-    ukulele: true,
-    acoustic: true,
+    electro: false,
+    ukulele: false,
+    acoustic: false,
   });
 
   const [stringsType, setStringsType] = useState({
@@ -103,6 +105,10 @@ function CatalogPage({guitars, onCartAdd}) {
         if (!stringsType.twelve && stringsCount.twelve && !result) {
           result = guitar.stringsCount === StringsCount.TWELVE;
         }
+      }
+
+      if (!guitarType.acoustic && !guitarType.ukulele && !guitarType.electro) {
+        return result = true;
       }
 
       return result;
@@ -222,6 +228,54 @@ function CatalogPage({guitars, onCartAdd}) {
     }
   }, [guitarType]);
 
+  useEffect(() => {
+    if (priceRange.min < Price.MIN && !focusedInputMin) {
+      return setPriceRange({
+        ...priceRange,
+        min: Price.MIN,
+      });
+    }
+
+    if (priceRange.min > priceRange.max && priceRange.max > Price.MIN && !focusedInputMin) {
+      return setPriceRange({
+        ...priceRange,
+        min: priceRange.max,
+      });
+    }
+
+    if (priceRange.max > Price.MAX && !focusedInputMax) {
+      return setPriceRange({
+        ...priceRange,
+        max: Price.MAX,
+      });
+    }
+
+    if (priceRange.max < priceRange.min && !focusedInputMax) {
+      return setPriceRange({
+        ...priceRange,
+        max: priceRange.min,
+      });
+    }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [focusedInputMin, focusedInputMax]);
+
+  const handleInputMinFocus = () => {
+    setFocusedInputMin(true);
+  }
+
+  const handleInputMaxFocus = () => {
+    setFocusedInputMax(true);
+  }
+
+  const handleInputMinBlur = () => {
+    setFocusedInputMin(false);
+  }
+
+  const handleInputMaxBlur = () => {
+    setFocusedInputMax(false);
+  }
+
   const handleSortPriceClick = (evt) => {
     evt.preventDefault();
 
@@ -267,10 +321,6 @@ function CatalogPage({guitars, onCartAdd}) {
   const handleMinPriceType = (evt) => {
     const number = getNumberFromString(evt.target.value);
 
-    if (number < Price.MIN || number > priceRange.max) {
-      return;
-    }
-
     setPriceRange({
       ...priceRange,
       min: number,
@@ -280,13 +330,9 @@ function CatalogPage({guitars, onCartAdd}) {
   const handleMaxPriceType = (evt) => {
     const number = getNumberFromString(evt.target.value);
 
-    if (number < priceRange.min || number > Price.MAX) {
-      return;
-    }
-
     setPriceRange({
       ...priceRange,
-      max: getNumberFromString(evt.target.value),
+      max: number,
     });
   };
 
@@ -440,10 +486,10 @@ function CatalogPage({guitars, onCartAdd}) {
                 <fieldset className="filter__fieldset filter__fieldset--price">
                   <h3 className="filter__fieldset-title">Цена, ₽</h3>
 
-                  <input type="text" className="filter__input" id="input-min" onChange={handleMinPriceType} value={getNumberWithSpaces(priceRange.min)} />
+                  <input type="text" className="filter__input" id="input-min" maxLength="8" onFocus={handleInputMinFocus} onBlur={handleInputMinBlur} onChange={handleMinPriceType} placeholder="1 700" value={getNumberWithSpaces(priceRange.min)} />
                   <label htmlFor="input-min" className="visually-hidden">Минимум</label>
 
-                  <input type="text" className="filter__input" id="input-max" onChange={handleMaxPriceType} value={getNumberWithSpaces(priceRange.max)} />
+                  <input type="text" className="filter__input" id="input-max" maxLength="8" onFocus={handleInputMaxFocus} onBlur={handleInputMaxBlur} onChange={handleMaxPriceType} placeholder="35 000" value={getNumberWithSpaces(priceRange.max)} />
                   <label htmlFor="input-max" className="visually-hidden">Максимум</label>
                 </fieldset>
 
@@ -574,7 +620,7 @@ function CatalogPage({guitars, onCartAdd}) {
                   </li>
                 ))}
 
-                {activePage !== pagesCount ?
+                {activePage !== pagesCount && pagesCount !== 1 && pagesCount !== 0 ?
                 <li className="catalog__pagination-item">
                   <a href="/#" className="catalog__pagination-button catalog__pagination-button--large link" onClick={handleNextPageClick}>
                     Далее
