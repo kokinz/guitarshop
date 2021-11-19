@@ -105,6 +105,10 @@ function CatalogPage({guitars, onCartAdd}) {
         if (!stringsType.twelve && stringsCount.twelve && !result) {
           result = guitar.stringsCount === StringsCount.TWELVE;
         }
+
+        if (!stringsCount.four && !stringsCount.six && !stringsCount.seven && !stringsCount.twelve) {
+          result = true;
+        }
       }
 
       if (!guitarType.acoustic && !guitarType.ukulele && !guitarType.electro) {
@@ -154,13 +158,6 @@ function CatalogPage({guitars, onCartAdd}) {
         seven: true,
         twelve: true,
       });
-
-      setStringsCount({
-        four: true,
-        six: false,
-        seven: false,
-        twelve: false,
-      });
     }
 
     if (guitarType.acoustic && !guitarType.electro && !guitarType.ukulele) {
@@ -169,13 +166,6 @@ function CatalogPage({guitars, onCartAdd}) {
         six: false,
         seven: false,
         twelve: false,
-      });
-
-      setStringsCount({
-        four: false,
-        six: true,
-        seven: true,
-        twelve: true,
       });
     }
 
@@ -186,13 +176,6 @@ function CatalogPage({guitars, onCartAdd}) {
         seven: false,
         twelve: true,
       });
-
-      setStringsCount({
-        four: true,
-        six: true,
-        seven: true,
-        twelve: false,
-      });
     }
 
     if ((guitarType.electro && guitarType.acoustic) || (guitarType.acoustic && guitarType.ukulele)) {
@@ -201,13 +184,6 @@ function CatalogPage({guitars, onCartAdd}) {
         six: false,
         seven: false,
         twelve: false,
-      });
-
-      setStringsCount({
-        four: true,
-        six: true,
-        seven: true,
-        twelve: true,
       });
     }
 
