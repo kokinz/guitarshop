@@ -44,7 +44,7 @@ function CatalogPage({guitars, onCartAdd}) {
 
   const [priceRange, setPriceRange] = useState({
     max: Price.MAX,
-    min: Price.MIN
+    min: Price.MIN,
   });
 
   const [guitarType, setGuitarType] = useState({
@@ -486,10 +486,10 @@ function CatalogPage({guitars, onCartAdd}) {
                 <fieldset className="filter__fieldset filter__fieldset--price">
                   <h3 className="filter__fieldset-title">Цена, ₽</h3>
 
-                  <input type="text" className="filter__input" id="input-min" maxLength="8" onFocus={handleInputMinFocus} onBlur={handleInputMinBlur} onChange={handleMinPriceType} placeholder="1 700" value={getNumberWithSpaces(priceRange.min)} />
+                  <input type="text" className="filter__input" id="input-min" maxLength="8" onFocus={handleInputMinFocus} onBlur={handleInputMinBlur} onChange={handleMinPriceType} placeholder="1 700" value={priceRange.min !== Price.MIN ? getNumberWithSpaces(priceRange.min) : ''} />
                   <label htmlFor="input-min" className="visually-hidden">Минимум</label>
 
-                  <input type="text" className="filter__input" id="input-max" maxLength="8" onFocus={handleInputMaxFocus} onBlur={handleInputMaxBlur} onChange={handleMaxPriceType} placeholder="35 000" value={getNumberWithSpaces(priceRange.max)} />
+                  <input type="text" className="filter__input" id="input-max" maxLength="8" onFocus={handleInputMaxFocus} onBlur={handleInputMaxBlur} onChange={handleMaxPriceType} placeholder="35 000" value={priceRange.max !== Price.MAX ? getNumberWithSpaces(priceRange.max) : ''} />
                   <label htmlFor="input-max" className="visually-hidden">Максимум</label>
                 </fieldset>
 
