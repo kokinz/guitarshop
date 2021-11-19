@@ -84,10 +84,6 @@ function CatalogPage({guitars, onCartAdd}) {
       }
 
       if (result) {
-        result = (guitar.price >= priceRange.min && guitar.price <= priceRange.max);
-      }
-
-      if (result) {
         result = false;
 
         if (!stringsType.four && stringsCount.four && !result) {
@@ -112,7 +108,11 @@ function CatalogPage({guitars, onCartAdd}) {
       }
 
       if (!guitarType.acoustic && !guitarType.ukulele && !guitarType.electro) {
-        return result = true;
+        result = true;
+      }
+
+      if (result) {
+        result = (guitar.price >= priceRange.min && guitar.price <= priceRange.max);
       }
 
       return result;
